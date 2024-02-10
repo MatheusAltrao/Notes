@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply bg-slate-950 text-slate-50  antialiased;
+}
+
+.note {
+    @apply rounded-md text-left bg-slate-800 p-5 space-y-3 overflow-hidden relative hover:ring-1 hover:ring-slate-600 focus-visible:ring-1 focus-visible:ring-lime-400 outline-none flex flex-col items-start justify-start transition-colors;
+}
+
+.dialog-overlay {
+    @apply inset-0 z-[5] fixed bg-black/40;
+}
+
+.dialog-content {
+    @apply fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-800 rounded-lg  w-full max-w-[650px] h-[600px] overflow-hidden flex flex-col z-10;
+}
+
+.dialog-close {
+    @apply h-8 w-8 bg-slate-900 flex items-center justify-center absolute right-0 top-0 text-slate-500 hover:text-slate-50 transition-colors;
+}
