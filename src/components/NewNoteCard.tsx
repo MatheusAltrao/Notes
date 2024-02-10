@@ -106,169 +106,149 @@ const NewNoteCard = ({ onNoteCreated }: INewNoteCard) => {
                     </p>
                 </div>
             </Dialog.Trigger>
-            <Dialog.Content className=' dialog-content  '>
-                <Dialog.Close className=' dialog-close '>
-                    <X size={18} />
-                </Dialog.Close>
-                <form className='flex flex-1 flex-col'>
-                    <div className='flex flex-1 flex-col gap-4 p-5 '>
-                        <div>
-                            <h2 className='text-sm font-medium '>
-                                Adicionar nota
-                            </h2>
+            <Dialog.Content className=' dialog-content    '>
+                <div className='bg-slate-800 rounded-lg relative h-full flex flex-1 overflow-hidden '>
+                    <Dialog.Close className=' dialog-close '>
+                        <X size={18} />
+                    </Dialog.Close>
+                    <form className='flex flex-1 flex-col'>
+                        <div className='flex flex-1 flex-col gap-4 p-5 '>
+                            <div>
+                                <h2 className='text-sm font-medium '>
+                                    Adicionar nota
+                                </h2>
 
-                            <p className='text-sm leading-6 text-slate-400 '>
-                                Comece{' '}
+                                <p className='text-sm leading-6 text-slate-400 '>
+                                    Comece{' '}
+                                    <button
+                                        type='button'
+                                        onClick={handleStartRecording}
+                                        className='text-lime-400 hover:underline underline-offset-4'
+                                    >
+                                        gravando uma nota
+                                    </button>{' '}
+                                    em áudio ou se preferir{' '}
+                                    <button
+                                        type='button'
+                                        onClick={() =>
+                                            setSelectSection('digitation')
+                                        }
+                                        className='text-lime-400 hover:underline underline-offset-4'
+                                    >
+                                        utilize apenas texto
+                                    </button>
+                                    .
+                                </p>
+                            </div>
+
+                            <header className='flex items-center gap-4'>
                                 <button
-                                    type='button'
                                     onClick={handleStartRecording}
-                                    className='text-lime-400 hover:underline underline-offset-4'
-                                >
-                                    gravando uma nota
-                                </button>{' '}
-                                em áudio ou se preferir{' '}
-                                <button
                                     type='button'
-                                    onClick={() =>
-                                        setSelectSection('digitation')
-                                    }
-                                    className='text-lime-400 hover:underline underline-offset-4'
+                                    className={`px-8 py-2 rounded-md transition-colors font-semibold  text-center text-sm ${
+                                        selectSection == 'conversation'
+                                            ? 'bg-lime-400 hover:bg-lime-500 text-lime-950  '
+                                            : 'bg-slate-400 hover:bg-slate-500 text-slate-950'
+                                    }`}
                                 >
-                                    utilize apenas texto
+                                    Voz
                                 </button>
-                                .
-                            </p>
+                                <button
+                                    onClick={selectSectionDigitation}
+                                    type='button'
+                                    className={`px-8 py-2 rounded-md transition-colors font-semibold  text-center text-sm ${
+                                        selectSection == 'digitation'
+                                            ? 'bg-lime-400 hover:bg-lime-500 text-lime-950  '
+                                            : 'bg-slate-400 hover:bg-slate-500 text-slate-950'
+                                    }`}
+                                >
+                                    Digitado
+                                </button>
+                            </header>
+
+                            {selectSection == 'conversation' && (
+                                <div className='flex flex-1 flex-col'>
+                                    <textarea
+                                        readOnly
+                                        ref={textareaContent}
+                                        value={content}
+                                        onChange={(e) =>
+                                            setContent(e.target.value)
+                                        }
+                                        placeholder='Insira a sua nota '
+                                        autoFocus
+                                        className='outline-none bg-transparent w-full resize-none leading-6 text-slate-400 flex-1 '
+                                    />
+
+                                    <div className='space-y-2'>
+                                        {isRecording ? (
+                                            <button
+                                                onClick={handleStopRecording}
+                                                type='button'
+                                                className=' w-full bg-slate-900 hover:bg-slate-700 transition-colors  py-4  text-center rounded-md font-semibold text-sm'
+                                            >
+                                                <div className='flex items-center justify-center gap-2'>
+                                                    {' '}
+                                                    <div className='w-2 h-2 animate-pulse  rounded-full bg-red-600' />{' '}
+                                                    <p>
+                                                        Gravando! (clique p/
+                                                        interromper)
+                                                    </p>
+                                                </div>
+                                            </button>
+                                        ) : (
+                                            <button
+                                                onClick={handleStartRecording}
+                                                type='button'
+                                                className=' w-full bg-red-900 hover:bg-red-700 transition-colors  py-4  text-center rounded-md font-semibold text-sm'
+                                            >
+                                                <div className='flex items-center justify-center gap-2'>
+                                                    <p>
+                                                        Pausado! (clique p/
+                                                        gravar)
+                                                    </p>
+                                                </div>
+                                            </button>
+                                        )}
+
+                                        <button
+                                            type='button'
+                                            onClick={handleSaveNote}
+                                            className=' w-full bg-lime-400 hover:bg-lime-500 transition-colors text-lime-950 rounded-md font-semibold py-4 text-center text-sm'
+                                        >
+                                            Salvar nota
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
+                            {selectSection == 'digitation' && (
+                                <div className='flex flex-1 flex-col'>
+                                    <textarea
+                                        ref={textareaContent}
+                                        value={content}
+                                        onChange={(e) =>
+                                            setContent(e.target.value)
+                                        }
+                                        placeholder='Insira a sua nota '
+                                        autoFocus
+                                        className='outline-none bg-transparent w-full resize-none leading-6 text-slate-400 flex-1 '
+                                    />
+
+                                    <div className='space-y-2'>
+                                        <button
+                                            type='button'
+                                            onClick={handleSaveNote}
+                                            className=' w-full bg-lime-400 hover:bg-lime-500 transition-colors text-lime-950 rounded-md font-semibold py-4 text-center text-sm'
+                                        >
+                                            Salvar nota
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
                         </div>
-
-                        <header className='flex items-center gap-4'>
-                            <button
-                                onClick={handleStartRecording}
-                                type='button'
-                                className={`px-8 py-2 rounded-md transition-colors font-semibold  text-center text-sm ${
-                                    selectSection == 'conversation'
-                                        ? 'bg-lime-400 hover:bg-lime-500 text-lime-950  '
-                                        : 'bg-slate-400 hover:bg-slate-500 text-slate-950'
-                                }`}
-                            >
-                                Voz
-                            </button>
-                            <button
-                                onClick={selectSectionDigitation}
-                                type='button'
-                                className={`px-8 py-2 rounded-md transition-colors font-semibold  text-center text-sm ${
-                                    selectSection == 'digitation'
-                                        ? 'bg-lime-400 hover:bg-lime-500 text-lime-950  '
-                                        : 'bg-slate-400 hover:bg-slate-500 text-slate-950'
-                                }`}
-                            >
-                                Digitado
-                            </button>
-                        </header>
-
-                        {selectSection == 'conversation' && (
-                            <div className='flex flex-1 flex-col'>
-                                <textarea
-                                    readOnly={isRecording}
-                                    ref={textareaContent}
-                                    value={content}
-                                    onChange={(e) => setContent(e.target.value)}
-                                    placeholder='Insira a sua nota '
-                                    autoFocus
-                                    className='outline-none bg-transparent w-full resize-none leading-6 text-slate-400 flex-1 '
-                                />
-
-                                <div className='space-y-2'>
-                                    {isRecording ? (
-                                        <button
-                                            onClick={handleStopRecording}
-                                            type='button'
-                                            className=' w-full bg-slate-900 hover:bg-slate-700 transition-colors  py-4  text-center rounded-md font-semibold text-sm'
-                                        >
-                                            <div className='flex items-center justify-center gap-2'>
-                                                {' '}
-                                                <div className='w-2 h-2 animate-pulse  rounded-full bg-red-600' />{' '}
-                                                <p>
-                                                    Gravando! (clique p/
-                                                    interromper)
-                                                </p>
-                                            </div>
-                                        </button>
-                                    ) : (
-                                        <button
-                                            onClick={handleStartRecording}
-                                            type='button'
-                                            className=' w-full bg-red-900 hover:bg-red-700 transition-colors  py-4  text-center rounded-md font-semibold text-sm'
-                                        >
-                                            <div className='flex items-center justify-center gap-2'>
-                                                <p>
-                                                    Pausado! (clique p/ gravar)
-                                                </p>
-                                            </div>
-                                        </button>
-                                    )}
-
-                                    <button
-                                        type='button'
-                                        onClick={handleSaveNote}
-                                        className=' w-full bg-lime-400 hover:bg-lime-500 transition-colors text-lime-950 rounded-md font-semibold py-4 text-center text-sm'
-                                    >
-                                        Salvar nota
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-
-                        {selectSection == 'digitation' && (
-                            <div className='flex flex-1 flex-col'>
-                                <textarea
-                                    readOnly={isRecording}
-                                    ref={textareaContent}
-                                    value={content}
-                                    onChange={(e) => setContent(e.target.value)}
-                                    placeholder='Insira a sua nota '
-                                    autoFocus
-                                    className='outline-none bg-transparent w-full resize-none leading-6 text-slate-400 flex-1 '
-                                />
-
-                                <div className='space-y-2'>
-                                    <button
-                                        type='button'
-                                        onClick={handleSaveNote}
-                                        className=' w-full bg-lime-400 hover:bg-lime-500 transition-colors text-lime-950 rounded-md font-semibold py-4 text-center text-sm'
-                                    >
-                                        Salvar nota
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-
-                    {/*  {isRecording ? (
-                        <button
-                            onClick={handleStopRecording}
-                            type='button'
-                            className=' w-full bg-slate-900 hover:bg-slate-700 transition-colors  py-4  text-center font-semibold text-sm'
-                        >
-                            <div className='flex items-center justify-center gap-2'>
-                                {' '}
-                                <div className='w-2 h-2 animate-pulse  rounded-full bg-red-600' />{' '}
-                                <p> Gravando! (clique p/ interromper)</p>
-                            </div>
-                        </button>
-                    ) : (
-                        
-                    )}
-
-                    {!shoulShowOnboarding && !isRecording && (
-                        <button
-                            onClick={() => setShouldShowOnboard(true)}
-                            type='button'
-                            className=' w-full bg-slate-900 hover:bg-slate-700 transition-colors  py-4 flex items-center justify-center gap-2 text-center font-semibold text-sm'
-                        >
-                            Voltar
-                        </button>
-                    )} */}
-                </form>
+                    </form>
+                </div>
             </Dialog.Content>
         </Dialog.Root>
     );

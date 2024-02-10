@@ -63,14 +63,14 @@ const App = () => {
                         onChange={(e) => setSearchNotes(e.target.value)}
                         type='text'
                         placeholder='Busque em suas notas...'
-                        className='focus:outline-none bg-transparent text-3xl font-semibold placeholder:text-slate-500 tracking-tight '
+                        className='focus:outline-none bg-transparent text-3xl w-full font-semibold placeholder:text-slate-500 tracking-tight '
                     />
                 </form>
 
                 <div className='w-full h-px bg-slate-700' />
             </div>
 
-            <div className='grid grid-cols-3 auto-rows-[250px] gap-4'>
+            <div className='grid grid-cols-1 lg:grid-cols-3  auto-rows-[250px] gap-4'>
                 <NewNoteCard onNoteCreated={onNoteCreated} />
 
                 {filteredNotes.map((note, index) => (
