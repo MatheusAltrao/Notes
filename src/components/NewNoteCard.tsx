@@ -98,7 +98,7 @@ const NewNoteCard = ({ onNoteCreated }: INewNoteCard) => {
         <Dialog.Root>
             <Dialog.Overlay className='dialog-overlay ' />
             <Dialog.Trigger className='note'>
-                <div>
+                <div className='h-full'>
                     <span className='text-sm font-medium '>Adicionar nota</span>
                     <p className='text-sm leading-6 text-slate-400 '>
                         Grave uma nota em áudio que será convertida para texto
