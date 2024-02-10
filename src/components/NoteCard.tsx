@@ -23,8 +23,8 @@ const NoteCard = ({ note, onDeleteNote }: INoteCard) => {
                         })}
                     </span>
                     <div className='break-words'>
-                        <p className='text-sm leading-6 text-slate-400 whitespace-normal text-left break-words'>
-                            {note.content}
+                        <p className='text-sm leading-6 text-slate-400  text-left break-words'>
+                            {note.content.slice(0, 300)} ...
                         </p>
                     </div>
                 </div>
@@ -34,16 +34,19 @@ const NoteCard = ({ note, onDeleteNote }: INoteCard) => {
                     <Dialog.Close className='dialog-close'>
                         <X size={18} />
                     </Dialog.Close>
-                    <div className='flex flex-1 flex-col gap-3 p-5 '>
-                        <span className='text-sm font-medium '>
+
+                    <div className='h-full p-4 max-h-[600px] overflow-hidden overflow-y-auto'>
+                        <span className='text-sm font-medium'>
                             {formatDistanceToNow(note.date, {
                                 locale: ptBR,
                                 addSuffix: true,
                             })}
                         </span>
-                        <p className='text-sm leading-6 text-slate-400 '>
-                            {note.content}
-                        </p>
+                        <div className='break-words'>
+                            <p className='text-sm leading-6 text-slate-400 whitespace-normal text-left break-words'>
+                                {note.content}
+                            </p>
+                        </div>
                     </div>
 
                     <button
